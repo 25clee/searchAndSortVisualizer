@@ -4,20 +4,24 @@ public class Wrapper {
     private int y;
     private int w;
     private int h;
+    private int index;
     private int value;
     public boolean hasBeenCompared;
 
-    public Wrapper(int x, int y, int w, int h, int value){
+    public Wrapper(int x, int y, int w, int h, int index, int value){
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        this.index = index;
         this.value = value;
     }
 
     public int getValue(){
         return value;
     }
+    public int getIndex(){return index;};
+    public void setValue(int value2){value = value2;}
 
     public void display(){
         if(hasBeenCompared) {

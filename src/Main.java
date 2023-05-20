@@ -24,15 +24,11 @@ public class Main extends PApplet {
         int w = 80;
         for (int i = 0; i<listSize;  i++) {
             int x = i*w;
-            Wrapper num = new Wrapper (x + 50 ,h + 100,w,h,i);
+            Wrapper num = new Wrapper (x + 50 ,h + 100,w,h,i, (int)(Math.random()*10));
             list.add(num);
         }
         low = 0;
         high = listSize-1;
-
-        //        TO TEST binarySearchRecursive AND binarySearchIterative:
-        //        System.out.println(binarySearchRecursive(list.get(0), list.size()-1, 5));
-        //        System.out.println(binarySearchIterative(list.get(0), list.size()-1, 5));
     }
 
     public void settings(){size(900,600);}
@@ -45,20 +41,23 @@ public class Main extends PApplet {
         if (status == 0){
             text("NOT FOUND YET", (float)(width/2.25), height/10);
         } else if (status == 1){
-            text("FOUND AT INDEX " + list.get(mid).getValue(), (float)(width/2.25), height/10);
+            text("FOUND AT INDEX " + list.get(mid).getIndex(), (float)(width/2.25), height/10);
         } else {
             text("DOESN'T EXIST", (float)(width/2.25), height/10);
         }
-        text("INSTRUCTIONS: \n 1. Type the number to be searched. " +
-                "\n 2. Press that key to iterate through the search. The number being compared will be highlighted. " +
-                "\n 3. Press the ENTER key to start over.", width/4, height/2);
+        text("INSTRUCTIONS: \n 1. Press the 's' key to sort the numbers." +
+                "\n 2. Type the number to be searched. " +
+                "\n 3. Press that key to iterate through the search. The number being compared will be highlighted. " +
+                "\n 4. Press the ENTER key to start over with a new set of numbers.", width/4, height/2);
     }
 
     public void keyPressed() {
         if (key == ENTER){
             target = 0;
             setup();
-        } else{
+        } else if (key == 's'){
+            selectionSort();
+        } else {
             String text = "";
             text+=key;
             target = Integer.valueOf(text);
@@ -84,6 +83,21 @@ public class Main extends PApplet {
             status = -1;
         }
         return -1;
+    }
+
+    public void selectionSort(){
+        for (int i = 0; i<list.size(); i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(j).getValue() < list.get(minIndex).getValue())
+                    minIndex = j;
+            }
+            if (minIndex != i) {
+                int temp = list.get(minIndex).getValue();
+                (list.get(minIndex)).setValue(list.get(i).getValue());
+                (list.get(i)).setValue(temp);
+            }
+        }
     }
 
 
